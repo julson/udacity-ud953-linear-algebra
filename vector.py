@@ -85,3 +85,10 @@ class Vector(object):
 
     def is_orthogonal (self, v, tolerance=1e-10):
         return abs(self.dot_product(v)) < tolerance
+
+    def component_parallel (self, b):
+        u = b.normalize()
+        return u.scale(self.dot_product(u))
+
+    def component_orthogonal (self, b):
+        return self - self.component_parallel(b)
