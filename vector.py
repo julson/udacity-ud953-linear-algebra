@@ -97,10 +97,16 @@ class Vector(object):
         if len(self.coordinates) != 3 or len(v.coordinates) != 3:
             raise Exception('Cannot calculate cross product for vectors that are not 3-dimensional')
 
-        x = (self.coordinates[1] * v.coordinates[2]) - (v.coordinates[1] * self.coordinates[2])
-        y = -((self.coordinates[0] * v.coordinates[2]) - (v.coordinates[0] * self.coordinates[2]))
-        z = (self.coordinates[0] * v.coordinates[1]) - (v.coordinates[0] * self.coordinates[1])
-        return Vector((x, y, z))
+        x_1, y_1, z_1 = self.coordinates
+        x_2, y_2, z_2 = v.coordinates
+
+        coordinates = [
+            y_1 * z_2 - z_1 * y_2,
+            -(x_1 * y_2 - y_1 * x_2),
+            x_1 * y_2 - y_1 * x_2
+        ]
+
+        return Vector(coordinates)
 
     def area_parallelogram (self, v):
         cross = self.cross_product(v)
