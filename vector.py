@@ -92,3 +92,20 @@ class Vector(object):
 
     def component_orthogonal (self, b):
         return self - self.component_parallel(b)
+
+    def cross_product (self, v):
+        if len(self.coordinates) != 3 or len(v.coordinates) != 3:
+            raise Exception('Cannot calculate cross product for vectors that are not 3-dimensional')
+
+        x = (self.coordinates[1] * v.coordinates[2]) - (v.coordinates[1] * self.coordinates[2])
+        y = -((self.coordinates[0] * v.coordinates[2]) - (v.coordinates[0] * self.coordinates[2]))
+        z = (self.coordinates[0] * v.coordinates[1]) - (v.coordinates[0] * self.coordinates[1])
+        return Vector((x, y, z))
+
+    def area_parallelogram (self, v):
+        cross = self.cross_product(v)
+        return Decimal(sqrt(sum([x**2 for x in cross.coordinates])))
+
+    def area_triangle (self, v):
+        cross = self.cross_product(v)
+        return Decimal(cross.magnitude() / 2)
